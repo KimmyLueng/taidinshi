@@ -27,19 +27,17 @@ jobs:
       run: |
         # 下载文件
         wget --http-user=Admin  --http-passwd=Pl@y2307 https://o11.leung.pp.ua/playlist.m3u -O tvb.m3u
-        wget https://edge2.hkdvb.com/hls/playlist.m3u?token=397579992129376 -O hkdvb.m3u
-        wget https://raw.githubusercontent.com/KimmyLueng/iptv-api/refs/heads/master/output/result.m3u -O cn.m3u
-        wget https://video.mytvsuper.xyz/playlist/zong-he-ding-yue.m3u?token=397579992018094 -O mytv.m3u
+        wget https://m3u.easeofworld.eu.org/index.php?token=682034fbbd&live=m3u -O all.m3u
         #wget https://raw.githubusercontent.com/jisoypub/iptv/refs/heads/main/hk.m3u -O hktw.m3u
 
         # 合并文件
         echo "#EXTM3U" > merged_playlist.m3u
-        awk '/^#EXTINF/{channel=$0; getline; url=$0; if(!seen[channel]++){print channel >> "merged_playlist.m3u"; print url >> "merged_playlist.m3u"}}' tvb.m3u hkdvb.m3u cn.m3u mytv.m3u
+        awk '/^#EXTINF/{channel=$0; getline; url=$0; if(!seen[channel]++){print channel >> "merged_playlist.m3u"; print url >> "merged_playlist.m3u"}}' tvb.m3u all.m3u
 
     - name: Update EPG
       run: |
         # 下载节目单
-        rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
+        rm -f EPG.xml && wget https://m3u.easeofworld.eu.org/t.xml -O EPG.xml
 
     - name: Update README
       run: |
